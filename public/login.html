@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+    <style>
+        body {
+            background: linear-gradient(90deg, #ffcc33, #f7ea2c, #f9f189);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+        }
+        .login-box {
+            background: #ffffff;
+            border-radius: 15px;
+            padding: 2rem 1.5rem;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+        .login-box h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffcc33;
+            margin-bottom: 1.5rem;
+        }
+        .field .label {
+            font-weight: bold;
+            color: #333;
+        }
+        .input {
+            border: 2px solid #ffcc33;
+            transition: all 0.3s ease-in-out;
+        }
+        .input:focus {
+            border-color: #f7ea2c;
+            box-shadow: 0 0 5px rgba(247, 234, 44, 0.5);
+        }
+        .button.is-primary {
+            background: #ffcc33;
+            border: none;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .button.is-primary:hover {
+            background: #f7ea2c;
+        }
+        .button.is-primary:active {
+            background: #f9f189;
+        }
+        .custom-alert {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #ff4444;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+        .custom-alert.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .custom-alert button {
+            margin-left: 10px;
+            background: none;
+            border: none;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .custom-alert button:hover {
+            text-decoration: underline;
+        }
+        
+  .footer .columns {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer .column {
+    margin-bottom: 1rem;
+  }
+}
+
+.footer {
+  background-color: #2c3e50;
+  padding: 2rem 0;
+  color: white;
+  font-family: 'Arial', sans-serif;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.footer .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer .columns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer p {
+  margin: 0;
+  font-weight: 300;
+}
+
+.footer .has-text-white {
+  color: #ffffff;
+}
+
+.footer .has-text-right {
+  text-align: right;
+}
+
+.footer strong {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+        
+    </style>
+</head>
+<body>
+    <div class="login-box m-3">
+        <h1>Login</h1>
+        <form id="login-form">
+            <div class="field">
+                <div class="control">
+                    <input class="input" type="text" id="username" placeholder="Enter your username" value="admin" required />
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input" type="password" id="password" placeholder="Enter your password" value="admin123" required />
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <button type="submit" class="button is-primary is-fullwidth">Login</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="custom-alert" class="custom-alert">
+        Invalid credentials
+        <button onclick="closeAlert()">Close</button>
+    </div>
+
+
+    <script>
+        // Check if the user is already logged in
+        window.onload = function() {
+            const user = localStorage.getItem('user');
+            if (user) {
+                window.location.href = 'index.html'; // Redirect to form page or dashboard
+            }
+        }
+
+        const showAlert = (message) => {
+            const alertBox = document.getElementById('custom-alert');
+            alertBox.textContent = message;
+            alertBox.innerHTML += '<button onclick="closeAlert()">Close</button>'; // Adding close button dynamically
+            alertBox.classList.add('visible');
+            setTimeout(() => {
+                closeAlert();
+            }, 3000); // Auto-close after 3 seconds
+        };
+
+        const closeAlert = () => {
+            const alertBox = document.getElementById('custom-alert');
+            alertBox.classList.remove('visible');
+        };
+
+        // Simulate login logic
+        document.getElementById('login-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Get input values
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Check if credentials are valid (this would normally be a backend check)
+            if (username === 'admin' && password === 'admin123') {
+                // Simulate saving the user data (e.g., using localStorage)
+                const user = { 
+                    username: 'admin', 
+                    isAuthenticated: true, 
+                    role: 'admin' 
+                };
+                localStorage.setItem('user', JSON.stringify(user));
+
+                // Redirect to the form page after successful login
+                window.location.href = 'index.html'; // Redirect to the desired page after login
+            } else {
+                showAlert('Invalid credentials');
+            }
+        });
+    </script>
+</body>
+</html>

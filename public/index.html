@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+<style>
+  body {
+  background-image: url('20126.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+.hero.is-primary {
+  background-color: #f7b42c;
+  background-image: linear-gradient(to right, #ffcc33, #f7ea2c, #f9f189);
+  width: 100%;
+}
+
+.overlay {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 8px;
+  border: 2px solid white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  margin: auto;
+}
+
+.form-heading {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #f7b42c;
+  margin-bottom: 30px;
+}
+
+.label {
+  font-weight: bold;
+}
+
+.centered-box {
+}
+
+.inline-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inline-image {
+  margin-right: 15px;
+  height: 150px;
+  width: auto;
+  border-radius: 100%;
+}
+
+@media (max-width: 768px) {
+  .form-heading {
+    font-size: 2rem;
+  }
+
+  .overlay {
+    padding: 15px;
+  }
+
+  .input, .textarea, .button {
+    font-size: 14px;
+  }
+
+  .inline-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .inline-image {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .footer .columns {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer .column {
+    margin-bottom: 1rem;
+  }
+}
+
+.footer {
+  background-color: #2c3e50;
+  padding: 2rem 0;
+  color: white;
+  font-family: 'Arial', sans-serif;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.footer .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer .columns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer p {
+  margin: 0;
+  font-weight: 300;
+}
+
+.footer .has-text-white {
+  color: #ffffff;
+}
+
+.footer .has-text-right {
+  text-align: right;
+}
+
+.footer strong {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+</style>
+  </head>
+  <body>
+
+
+  <script>
+      // On page load, check if the user is logged in
+      window.onload = function() {
+          const user = localStorage.getItem('user');
+          if (!user) {
+              // If no user is found in localStorage, redirect to login page
+              window.location.href = 'login.html';
+          } else {
+              const userObj = JSON.parse(user);
+              // Display user's info if needed (for example, their username)
+              console.log('Logged in as:', userObj.username);
+          }
+      };
+
+      // Sign out function to clear localStorage and redirect to login page
+      function signOut() {
+          localStorage.removeItem('user');  // Clear the user data
+          window.location.href = 'login.html';  // Redirect to login page
+      }
+  </script>
+
+    <section class="hero is-primary">
+      <div class="m-2">
+        <div class="container">
+          <div class="inline-content">
+            <img src="klm.jpg" alt="Biryani" class="inline-image">
+            <div>
+              <h1 class="title has-text-centered">MEGA BIRIYANI CHALLENGE 2025</h1>
+              <h2 class="subtitle has-text-centered">(Ward: 6, 7, 8, 9 & 10)</h2>
+            </div>
+           <div style="margin: 10px;"> <button class="button is-danger" onclick="signOut()">Sign Out</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <script>
+      // Function to check user authorization
+      function checkPermission() {
+          // Simulate getting the authentication status (could be from localStorage or sessionStorage)
+          const user = JSON.parse(localStorage.getItem('user'));
+
+          // If user is not logged in, redirect them to login page
+          if (!user || !user.isAuthenticated) {
+              window.location.href = 'login.html';  // Redirect to login page if not authenticated
+              return;
+          }
+
+          // Check if the user has permission to access this page
+          // For example, checking user role
+          if (user.role !== 'admin') { // Allow access only for admins
+              document.getElementById('content').innerHTML = '<h2>You do not have permission to access this page.</h2>';
+          }
+      }
+
+      // Run the permission check when the page loads
+      checkPermission();
+  </script>
+  
+    <div class="container overlay m-3 centered-box">
+      <h1 class="form-heading">Biriyani Challenge Booking</h1>
+      <form id="form" method="POST">
+  <!-- Name Field -->
+  <div class="field">
+    <label class="label">Name</label>
+    <div class="control">
+      <input class="input" type="text" placeholder="Enter Person Name" name="Name" required />
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">House Number</label>
+    <div class="control">
+      <input class="input" type="text" placeholder="Enter House Number" name="House Number" required />
+    </div>
+  </div>
+
+  <!-- Mobile Field -->
+  <div class="field">
+    <label class="label">Phone Number</label>
+    <div class="control">
+      <input
+      class="input"
+      type="tel"
+      placeholder="Enter your phone number"
+      name="Mobile"
+      pattern="[0-9]{10}"
+      required
+      aria-label="Mobile Number"
+    />
+    </div>
+  </div>
+
+<!-- Biriyani Price (Hidden Field) -->
+<div class="field">
+  <label class="label">Biriyani Price ₹100/Order</label>
+  <div class="control">
+    <input
+      class="input"
+      type="hidden"
+      id="price"
+      value="100"
+      name="Total"
+    />
+  </div>
+</div>
+
+<!-- Order Quantity Field -->
+<div class="field">
+  <label class="label">Order Quantity</label>
+  <div class="control">
+    <input
+      class="input"
+      type="number"
+      id="quantity"
+      placeholder="Enter Quantity"
+      name="Quantity"
+      oninput="calculateTotal()"
+      value="1"
+      min="1" 
+      required
+    />
+  </div>
+</div>
+
+<!-- Advance Received Field -->
+<div class="field">
+  <label class="label">Advance Received</label>
+  <div class="control">
+    <input
+      class="input"
+      type="number"
+      id="advance"
+      placeholder="Enter Received Amount"
+      name="Paid"
+      oninput="calculatePending()"
+      min="0" 
+    />
+  </div>
+</div>
+
+<!-- Payment Pending Field -->
+<div class="field">
+  <label class="label">Payment Pending</label>
+  <div class="control">
+    <input
+      class="input"
+      type="number"
+      id="pending"
+      placeholder="Pending Amount"
+      name="Pending"
+      min="0" 
+      readonly
+    />
+  </div>
+</div>
+
+<!-- Payment Status Radio Buttons -->
+<div class="field">
+  <label class="label">Payment Status</label>
+  <div class="control">
+    <label class="radio">
+      <input
+        type="radio"
+        name="Payment Status"
+        value="Advance Paid"
+        id="partially-paid"
+        onclick="updatePaymentStatus('Advance Paid')"
+      />
+      Advance Paid
+    </label>
+    <label class="radio">
+      <input
+        type="radio"
+        name="Payment Status"
+        value="Unpaid"
+        id="unpaid"
+        onclick="updatePaymentStatus('Unpaid')"
+      />
+      Unpaid
+    </label>
+  </div>
+</div>
+
+<script>
+  // Function to calculate total based on quantity and price
+  function calculateTotal() {
+    const price = 100;  // Biriyani price
+    const quantity = document.getElementById('quantity').value;
+    
+    // Total amount = quantity * price
+    const totalAmount = price * quantity;
+    
+    // Update the Total hidden field value
+    document.getElementById('price').value = totalAmount;
+    
+    // Recalculate the pending payment
+    calculatePending();
+  }
+
+  // Function to calculate pending payment after subtracting the advance
+  function calculatePending() {
+    const totalAmount = document.getElementById('price').value;
+    const advance = document.getElementById('advance').value || 0;
+
+    // Calculate pending amount (total - advance)
+    const pendingAmount = totalAmount - advance;
+
+    // Update the pending field value
+    document.getElementById('pending').value = pendingAmount < 0 ? 0 : pendingAmount;  // Avoid negative pending amount
+  }
+
+  // Function to update payment status when the user selects an option
+  function updatePaymentStatus(status) {
+    // Update logic for payment status (can be used for form submission or further processing)
+    console.log("Payment Status:", status);
+  }
+
+  // Initial calculation when page loads
+  window.onload = calculateTotal;
+</script>
+
+
+  <!-- Confirmation Checkbox -->
+  <div class="field">
+    <div class="control">
+      <label class="checkbox">
+        <input type="checkbox" name="Confirmed" value="yes" /> Check if all is read
+      </label>
+    </div>
+  </div>
+
+  <!-- Additional Information Field -->
+  <div class="field">
+    <label class="label">Additional Information</label>
+    <div class="control">
+      <textarea
+        class="textarea"
+        placeholder="Any additional information"
+        name="Remarks"
+      ></textarea>
+    </div>
+  </div>
+
+  <!-- Submit and Cancel Buttons -->
+  <div class="field is-grouped">
+    <div class="control">
+      <button class="button is-warning" type="submit" id="submit-button">
+        Submit
+      </button>
+    </div>
+    <div class="control">
+      <button
+        class="button is-secondary"
+        type="button"
+        onclick="window.location.reload();"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</form>
+
+    </div>
+
+    <div
+      id="message"
+      style="display: none; margin: 20px; font-weight: bold; color: yellow; padding: 8px; background-color: beige; border-radius: 4px; border-color: aquamarine;"
+    ></div>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="columns is-vcentered">
+          <!-- Left side: Contact Info -->
+          <div class="column is-half">
+            <p class="has-text-white">Reg.No. 179/IV/2017, AC Nirappu, Marakkara PO 676553, Malappuram Dt., Kerala</p>
+          </div>
+          
+          <!-- Right side: Powered by Info -->
+          <div class="column is-half has-text-right">
+            <p class="has-text-white">Powered by <strong>Rejy Karinga</strong></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    
+    
+
+    <script>
+      document.getElementById("form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        document.getElementById("message").textContent = "Submitting..";
+        document.getElementById("message").style.display = "block";
+        document.getElementById("submit-button").disabled = true;
+
+        var formData = new FormData(this);
+        var keyValuePairs = [];
+        for (var pair of formData.entries()) {
+          keyValuePairs.push(pair[0] + "=" + pair[1]);
+        }
+
+        var formDataString = keyValuePairs.join("&");
+
+        fetch(
+          "https://script.google.com/macros/s/AKfycbzz4fKNWEKK8sTJlmG3SETeF-lbqcR92W4J6J7_-263X7Vf2NvzhUbjQ4x5q46cNlGItQ/exec",
+          {
+            redirect: "follow",
+            method: "POST",
+            body: formDataString,
+            headers: {
+              "Content-Type": "text/plain;charset=utf-8",
+            },
+          }
+        )
+          .then(function (response) {
+            if (response) {
+              return response;
+            } else {
+              throw new Error("Failed to submit the form.");
+            }
+          })
+          .then(function (data) {
+            document.getElementById("message").textContent =
+              "Data submitted successfully!";
+            document.getElementById("message").style.display = "block";
+            document.getElementById("message").style.backgroundColor = "green";
+            document.getElementById("message").style.color = "beige";
+            document.getElementById("submit-button").disabled = false;
+            document.getElementById("form").reset();
+
+            setTimeout(function () {
+              document.getElementById("message").textContent = "";
+              document.getElementById("message").style.display = "none";
+            }, 2600);
+          })
+          .catch(function (error) {
+            console.error(error);
+            document.getElementById("message").textContent =
+              "An error occurred while submitting the form.";
+            document.getElementById("message").style.display = "block";
+            document.getElementById("message").style.backgroundColor = "red";
+            document.getElementById("message").style.color = "beige";
+            document.getElementById("submit-button").disabled = false;
+
+            setTimeout(function () {
+              document.getElementById("message").textContent = "";
+              document.getElementById("message").style.display = "none";
+            }, 2600);
+          });
+      });
+
+      
+    </script>
+  </body>
+</html>
